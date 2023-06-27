@@ -34,7 +34,7 @@ public class AuthService {
 
     public ResponseEntity<BaseResponse> login(LoginReqDTO request) {
         String hashPassword = passwordEncoder.encode(request.getPassword());
-        Optional<User> user = userRepository.findFirstByByPhoneAndPassword(request.getPhone(), hashPassword);
+        Optional<User> user = userRepository.findFirstByPhoneAndPassword(request.getPhone(), hashPassword);
         if (user.isEmpty()) {
             throw new BusinessException(ErrorsEnum.USER_NOT_FOUND);
         }
@@ -46,7 +46,7 @@ public class AuthService {
     public ResponseEntity<BaseResponse> updateName(String token, RegisterReqDTO request) {
         jwtUtils.parseSubject(token);
         String hashPassword = passwordEncoder.encode(request.getPassword());
-        Optional<User> users = userRepository.findFirstByByPhoneAndPassword(request.getPhone(), hashPassword);
+        Optional<User> users = userRepository.findFirstByPhoneAndPassword(request.getPhone(), hashPassword);
         if(users.isEmpty()) {
             throw new BusinessException(ErrorsEnum.USER_NOT_FOUND);
         }

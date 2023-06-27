@@ -12,7 +12,7 @@ import java.util.Optional;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
-    Optional<User> findFirstByByPhoneAndPassword(String phone, String password);
+    Optional<User> findFirstByPhoneAndPassword(String phone, String password);
 
     @Modifying
     @Query("update User u set u.name = :name where u.phone = :phone ")
