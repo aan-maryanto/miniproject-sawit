@@ -9,6 +9,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
+
 @RestController
 @Slf4j
 @RequiredArgsConstructor
@@ -23,12 +27,12 @@ public class AuthController {
     }
 
     @PostMapping(value = "/login")
-    public ResponseEntity<BaseResponse> login(@RequestBody LoginReqDTO request) {
+    public ResponseEntity<BaseResponse> login(@RequestBody LoginReqDTO request) throws IOException, NoSuchAlgorithmException, InvalidKeySpecException {
         return authService.login(request);
     }
 
     @PostMapping(value = "/update-name")
-    public ResponseEntity<BaseResponse> updateName(@RequestHeader(value = "Authorization") String token, @RequestBody RegisterReqDTO request) {
+    public ResponseEntity<BaseResponse> updateName(@RequestHeader(value = "Authorization") String token, @RequestBody RegisterReqDTO request) throws NoSuchAlgorithmException, InvalidKeySpecException {
         return authService.updateName(token, request);
     }
 

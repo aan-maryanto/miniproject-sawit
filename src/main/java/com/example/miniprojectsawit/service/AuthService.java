@@ -13,6 +13,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.util.Optional;
 
 @Service
@@ -32,7 +35,7 @@ public class AuthService {
         return userRepository.save(user);
     }
 
-    public ResponseEntity<BaseResponse> login(LoginReqDTO request) {
+    public ResponseEntity<BaseResponse> login(LoginReqDTO request) throws IOException, NoSuchAlgorithmException, InvalidKeySpecException {
         String hashPassword = passwordEncoder.encode(request.getPassword());
         Optional<User> user = userRepository.findFirstByPhoneAndPassword(request.getPhone(), hashPassword);
         if (user.isEmpty()) {
@@ -43,7 +46,7 @@ public class AuthService {
         return ResponseEntity.ok(response);
     }
 
-    public ResponseEntity<BaseResponse> updateName(String token, RegisterReqDTO request) {
+    public ResponseEntity<BaseResponse> updateName(String token, RegisterReqDTO request) throws NoSuchAlgorithmException, InvalidKeySpecException {
         jwtUtils.parseSubject(token);
         String hashPassword = passwordEncoder.encode(request.getPassword());
         Optional<User> users = userRepository.findFirstByPhoneAndPassword(request.getPhone(), hashPassword);
